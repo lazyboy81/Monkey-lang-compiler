@@ -11,9 +11,9 @@
         '._ '-=-' _.'
            '-----'
 ````
-🐒 Monkey Lang — A Go Interpreter
+🐒 Monkey Lang — A Go Virtual Machine/Compiler
 
-This project is an implementation of the Monkey programming language, built by following the book "Write an Interpreter in Go"
+This project is an implementation of the Monkey programming language, built by following the book "Write a Compiler in Go"
 
 ---
 
@@ -50,8 +50,8 @@ Monkey-Lang/
 1. Clone the Repository
 
 ````bash
-   git clone https://github.com/Sina-karimi81/Monkey-lang-interpreter.git
-   cd Monkey-lang-interpreter
+   git clone https://github.com/Sina-karimi81/Monkey-lang-compiler.git
+   cd Monkey-lang-compiler
 ````
 2. Run the REPL
 ```bash
