@@ -61,6 +61,9 @@ const (
 	// booleans
 	OpTrue
 	OpFalse
+	OpEqual
+	OpNotEqual
+	OpGreaterThan
 )
 
 type Definitions struct {
@@ -79,8 +82,11 @@ var definitions = map[Opcode]*Definitions{
 	OpDiv: {"OpDiv", []int{}},
 
 	// booleans
-	OpTrue:  {"OpTrue", []int{}},
-	OpFalse: {"OpFalse", []int{}},
+	OpTrue:        {"OpTrue", []int{}},
+	OpFalse:       {"OpFalse", []int{}},
+	OpEqual:       {"OpEqual", []int{}},
+	OpNotEqual:    {"OpNotEqual", []int{}},
+	OpGreaterThan: {"OpGreaterThan", []int{}},
 }
 
 func Lookup(op byte) (*Definitions, error) {
