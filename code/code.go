@@ -57,6 +57,10 @@ const (
 	OpSub
 	OpMul
 	OpDiv
+
+	// booleans
+	OpTrue
+	OpFalse
 )
 
 type Definitions struct {
@@ -73,6 +77,10 @@ var definitions = map[Opcode]*Definitions{
 	OpSub: {"OpSub", []int{}},
 	OpMul: {"OpMul", []int{}},
 	OpDiv: {"OpDiv", []int{}},
+
+	// booleans
+	OpTrue:  {"OpTrue", []int{}},
+	OpFalse: {"OpFalse", []int{}},
 }
 
 func Lookup(op byte) (*Definitions, error) {
