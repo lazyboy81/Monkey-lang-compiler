@@ -15,13 +15,13 @@ func (ins Instructions) String() string {
 	for i < len(ins) {
 		def, err := Lookup(ins[i])
 		if err != nil {
-			fmt.Fprintf(&out, "ERROR: %s\n", err)
+			_, _ = fmt.Fprintf(&out, "ERROR: %s\n", err)
 			continue
 		}
 
 		operands, read := ReadOperands(def, ins[i+1:])
 
-		fmt.Fprintf(&out, "%04d %s\n", i, ins.fmtInstruction(def, operands))
+		_, _ = fmt.Fprintf(&out, "%04d %s\n", i, ins.fmtInstruction(def, operands))
 
 		i += 1 + read
 	}
@@ -64,6 +64,9 @@ const (
 	OpEqual
 	OpNotEqual
 	OpGreaterThan
+
+	OpMinus
+	OpBang
 )
 
 type Definitions struct {
@@ -87,6 +90,9 @@ var definitions = map[Opcode]*Definitions{
 	OpEqual:       {"OpEqual", []int{}},
 	OpNotEqual:    {"OpNotEqual", []int{}},
 	OpGreaterThan: {"OpGreaterThan", []int{}},
+
+	OpMinus: {"OpMinus", []int{1}},
+	OpBang:  {"OpBang", []int{1}},
 }
 
 func Lookup(op byte) (*Definitions, error) {
