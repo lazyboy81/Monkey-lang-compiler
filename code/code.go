@@ -75,6 +75,8 @@ const (
 
 	OpSetGlobal
 	OpGetGlobal
+
+	OpArray
 )
 
 type Definitions struct {
@@ -108,6 +110,8 @@ var definitions = map[Opcode]*Definitions{
 	OpNull:      {"OpNull", []int{}},
 	OpSetGlobal: {"OpSetGlobal", []int{2}},
 	OpGetGlobal: {"OpGetGlobal", []int{2}},
+
+	OpArray: {"OpArray", []int{2}},
 }
 
 func Lookup(op byte) (*Definitions, error) {
