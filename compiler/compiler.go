@@ -5,6 +5,7 @@ import (
 	"Monkey-Lang/code"
 	"Monkey-Lang/object"
 	"fmt"
+	"sort"
 )
 
 type EmittedInstruction struct {
@@ -208,6 +209,31 @@ func (c *Compiler) Compile(node ast.Node) error {
 		}
 
 		c.emit(code.OpGetGlobal, symbol.Index)
+
+	case *ast.HashLiteral:
+		keys := []ast.Expression{}
+		for k := range node.Pairs {
+			keys = append(keys, k)
+		}
+		//  Go does not guarantee a consistent order when iterating through the keys and values of a map,
+		//  we need to manually sort the keys before we can compile them.
+		sort.Slice(keys, func(i, j int) bool {
+			return keys[i].String() < keys[j].String()
+		})
+
+		for _, k := range keys {
+			err := c.Compile(k)
+			if err != nil {
+				return err
+			}
+
+			err = c.Compile(node.Pairs[k]) // emit the value on the stack
+			if err != nil {
+				return err
+			}
+		}
+
+		c.emit(code.OpHash, len(node.Pairs)*2)
 	}
 
 	return nil
