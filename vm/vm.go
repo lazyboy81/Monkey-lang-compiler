@@ -208,13 +208,13 @@ func (vm *VM) Run() error {
 			}
 
 		case code.OpCall:
-			fn, ok := vm.stack[vm.sp-1].(*object.CompiledFunction)
-			if !ok {
-				return fmt.Errorf("calling non-function")
+			numArgs := code.ReadUint8(ins[ip+1:])
+			vm.currentFrame().ip += 1
+
+			err := vm.callFunction(int(numArgs))
+			if err != nil {
+				return err
 			}
-			frame := NewFrame(fn, vm.sp)
-			vm.pushFrame(frame)
-			vm.sp = frame.basePointer + fn.NumLocals // so there is a hole in the stack that we can use to store the local bindings
 
 		case code.OpReturnValue:
 			returnValue := vm.pop() // the return value which is at the top of the stack
@@ -271,6 +271,26 @@ func (vm *VM) buildHash(startIndex, endIndex int) (object.Object, error) {
 	}
 
 	return &object.Hash{Pairs: hashedPairs}, nil
+}
+
+func (vm *VM) callFunction(numArgs int) error {
+	// func + args
+	fn, ok := vm.stack[vm.sp-1-numArgs].(*object.CompiledFunction)
+	if !ok {
+		return fmt.Errorf("calling non-function")
+	}
+
+	if numArgs != fn.NumParameters {
+		return fmt.Errorf("wrong number of arguments: want=%d, got=%d",
+			fn.NumParameters, numArgs)
+	}
+
+	frame := NewFrame(fn, vm.sp-numArgs)
+	vm.pushFrame(frame)
+
+	vm.sp = frame.basePointer + fn.NumLocals // so there is a hole in the stack that we can use to store the local bindings and arguments
+
+	return nil
 }
 
 func isTruthy(obj object.Object) bool {
