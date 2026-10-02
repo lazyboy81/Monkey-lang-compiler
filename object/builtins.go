@@ -11,6 +11,10 @@ var Builtins = []struct {
 		&Builtin{Fn: lenImpl},
 	},
 	{
+		"puts",
+		&Builtin{Fn: puts},
+	},
+	{
 		"first",
 		&Builtin{Fn: first},
 	},
@@ -25,10 +29,6 @@ var Builtins = []struct {
 	{
 		"push",
 		&Builtin{Fn: push},
-	},
-	{
-		"puts",
-		&Builtin{Fn: puts},
 	},
 }
 
