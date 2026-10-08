@@ -41,6 +41,8 @@ func (ins Instructions) fmtInstruction(def *Definitions, operands []int) string 
 		return def.Name
 	case 1:
 		return fmt.Sprintf("%s %d", def.Name, operands[0])
+	case 2:
+		return fmt.Sprintf("%s %d %d", def.Name, operands[0], operands[1])
 	}
 
 	return fmt.Sprintf("ERROR: unhandled operandCount for %s\n", def.Name)
@@ -87,6 +89,8 @@ const (
 	OpReturn
 
 	OpGetBuiltin
+
+	OpClosure
 )
 
 type Definitions struct {
@@ -132,6 +136,9 @@ var definitions = map[Opcode]*Definitions{
 	OpReturn:      {"OpReturn", []int{}},
 
 	OpGetBuiltin: {"OpGetBuiltin", []int{1}},
+
+	// 2 bytes for index to constant pool, one byte for number of free variables that sit on the stack
+	OpClosure: {"OpClosure", []int{2, 1}},
 }
 
 func Lookup(op byte) (*Definitions, error) {
