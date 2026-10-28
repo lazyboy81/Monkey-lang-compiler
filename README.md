@@ -19,7 +19,7 @@ This project is an implementation of the Monkey programming language, built by f
 
 📘 Overview
 
-Monkey is a small, interpreted, dynamically-typed language with C-like syntax and JavaScript-like semantics.
+Monkey is a small, interpreted/compiled, dynamically-typed language with C-like syntax and JavaScript-like semantics.
 It supports variables, functions, closures, arrays, hashes, and control flow structures like if and return.
 
 This Go project implements:
@@ -29,6 +29,10 @@ Lexer — tokenizes the Monkey source code
 Parser — builds an abstract syntax tree (AST)
 
 Evaluator — executes the AST nodes
+
+Compiler — Generates Opcode using the AST nodes
+
+VM — execute the generated opcodes
 
 REPL — interactive Read-Eval-Print Loop for experimentation
 
@@ -44,6 +48,10 @@ Monkey-Lang/
 ├── object/          # Runtime objects and environment
 ├── evaluator/       # Evaluation logic
 ├── token/           # Token definitions
+├── vm/              # Parse Opcode and evaluate the result
+├── code/            # Opcode definitions and utilities
+├── compiler/        # Generate Opcodes and symbol table using AST
+├── benchmark/       # Bechmark test between compiler and interpreter
 └── go.mod           # Go module file
 ````
 🚀 Getting Started
@@ -72,14 +80,15 @@ true
 ````
 ---
 ⚙️ Requirements
-- Go 1.20+
+- Go 1.24+
 - No external dependencies
 ---
 🧠 Learning Resource
 
-This interpreter is built by following:
+This compiler is built by following:
 
-📖 [Write an Interpreter in Go](https://interpreterbook.com/)
+- 📖 [Write an Interpreter in Go](https://interpreterbook.com/)
+- 📖 [Write a compiler in Go](https://compilerbook.com/)
 
 ---
 🛠️ Future Work
@@ -87,6 +96,6 @@ This interpreter is built by following:
 - [x] Add built-in functions to type
 - [x] Add support for arrays
 - [x] Add support for hashes/objects
-- [ ] Add support for interpreting files
+- [ ] Add support for interpreting/compiling files
 - [ ] complete the standard library
 - [ ] improve error handling
